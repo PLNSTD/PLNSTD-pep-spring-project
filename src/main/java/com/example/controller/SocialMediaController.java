@@ -1,5 +1,11 @@
 package com.example.controller;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.entity.Account;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
@@ -7,6 +13,13 @@ package com.example.controller;
  * where applicable as well as the @ResponseBody and @PathVariable annotations. You should
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
+
+@RestController
 public class SocialMediaController {
 
+    @PostMapping("/register")
+    public ResponseEntity registerAccount(@RequestBody Account account) {
+        
+        return null;
+    }
 }
