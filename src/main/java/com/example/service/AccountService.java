@@ -18,10 +18,18 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
+    public Optional<String> findByUsername(String username) {
+        return accountRepository.findByUsername(username);
+    }
+
+    public Optional<Account> findById(Integer id) {
+        return accountRepository.findById(id);
+    }
+
     public Account registerAccount(Account account) {
         if (account.getUsername().isEmpty()) throw new IllegalArgumentException("Username is required");
         if (account.getPassword().length() < 4) throw new IllegalArgumentException("Password is too short");
-        if (accountRepository.findByUsername(account.getUsername()).isPresent()) throw new DuplicateAccountException("Username already exists");
+        if (this.findByUsername(account.getUsername()).isPresent()) throw new DuplicateAccountException("Username already exists");
         
         return accountRepository.save(account);
     }

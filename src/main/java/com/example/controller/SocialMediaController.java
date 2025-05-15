@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.exception.DuplicateAccountException;
 import com.example.exception.UnauthorizedLoginException;
 import com.example.service.AccountService;
@@ -53,5 +54,14 @@ public class SocialMediaController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
-    
+
+    @PostMapping("/messages")
+    public ResponseEntity<Message> postMessage(@RequestBody Message message) {
+        try {
+            Message savedMessage = messageService.saveMessage(message);
+            return ResponseEntity.status(HttpStatus.OK).body(savedMessage);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
 }
