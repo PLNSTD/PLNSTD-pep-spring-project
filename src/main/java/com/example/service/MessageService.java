@@ -1,7 +1,6 @@
 package com.example.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -51,5 +50,11 @@ public class MessageService {
         messageFound.setMessageText(newTextMessage);
 
         messageRepository.save(messageFound);
+    }
+
+    public List<Message> getMessagesByUserID(Integer Id) {
+        accountService.findById(Id).orElseThrow(() -> new EntityNotFoundException("User not found"));
+        
+        return messageRepository.findByPostedBy(Id);
     }
 }

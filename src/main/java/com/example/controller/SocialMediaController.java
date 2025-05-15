@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
@@ -103,6 +104,15 @@ public class SocialMediaController {
             return ResponseEntity.status(HttpStatus.OK).body(1);
         } catch (IllegalArgumentException | EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @GetMapping("/accounts/{accountId}/messages")
+    public ResponseEntity<List<Message>> getMessagesByUserId(@PathVariable Integer accountId) {
+        try {
+            return ResponseEntity.ok(messageService.getMessagesByUserID(accountId));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.ok(null);
         }
     }
 }
