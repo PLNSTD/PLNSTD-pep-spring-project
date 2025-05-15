@@ -1,6 +1,9 @@
 package com.example.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 
@@ -28,4 +31,8 @@ public class MessageService {
     public List<Message> getAllMessages() {
         return messageRepository.findAll();
     }
+
+    public Message getMessageByID(Integer Id) {
+        return messageRepository.findById(Id).orElse(null);
+    } 
 }
