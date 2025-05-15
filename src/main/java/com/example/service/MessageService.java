@@ -41,4 +41,15 @@ public class MessageService {
         if (!messageRepository.existsById(Id)) throw new EntityNotFoundException("Message with ID " + Id + " not found");
         messageRepository.deleteById(Id);
     }
+
+    public void updateMessageById(Integer Id, Message newMessage) {
+        String newTextMessage = newMessage.getMessageText();
+        if (newTextMessage.length() == 0 || newTextMessage.isEmpty() || newTextMessage == null) throw new IllegalArgumentException("Text can not be blank");
+        if (newTextMessage.length() > 255) throw new IllegalArgumentException("Text too long");
+        Message messageFound = messageRepository.findById(Id).orElseThrow(() -> new EntityNotFoundException("Message with ID " + Id + " not found"));
+
+        messageFound.setMessageText(newTextMessage);
+
+        messageRepository.save(messageFound);
+    }
 }
