@@ -2,10 +2,12 @@ package com.example.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
 import javax.security.auth.login.AccountNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,4 +83,15 @@ public class SocialMediaController {
         Message foundMessage = messageService.getMessageByID(messageId);
         return ResponseEntity.status(HttpStatus.OK).body(foundMessage);
     }
+
+    @DeleteMapping("/messages/{messageId}")
+    public ResponseEntity<Integer> deleteMessageById(@PathVariable Integer messageId) {
+        try {
+            messageService.deleteMessageById(messageId);
+            return ResponseEntity.status(HttpStatus.OK).body(1);
+        } catch (IllegalArgumentException | EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        }
+    }
+
 }

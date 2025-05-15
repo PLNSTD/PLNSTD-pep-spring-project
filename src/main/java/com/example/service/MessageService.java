@@ -34,5 +34,11 @@ public class MessageService {
 
     public Message getMessageByID(Integer Id) {
         return messageRepository.findById(Id).orElse(null);
-    } 
+    }
+
+    public void deleteMessageById(Integer Id) {
+        if (Id == null) throw new IllegalArgumentException("Id required");
+        if (!messageRepository.existsById(Id)) throw new EntityNotFoundException("Message with ID " + Id + " not found");
+        messageRepository.deleteById(Id);
+    }
 }
